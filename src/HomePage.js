@@ -24,8 +24,8 @@ function HomePage() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Header />
       <Container maxWidth="lg">
-        <Header />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
         </main>
