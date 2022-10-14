@@ -78,7 +78,7 @@ function QuizPage() {
               <Soal key={i} soal={{isisoal: soal, idx: i}}/>
             ))
           }
-          <Button onClick={submitQuiz} variant="raised" color="primary" style={{float: "right"}}>
+          <Button onClick={submitQuiz} sx={{ mt: 3 }} variant="contained" color="primary">
             Submit
           </Button>
         </FormControl>

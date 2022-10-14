@@ -6,7 +6,7 @@ const Answer = () => {
 
 	return (
 		<section>
-			<p>Jawabanmu adalah {answer}</p>
+			<p>Jawabanmu adalah {answer.answer.join(", ")}</p>
 		</section>
 	)
 }

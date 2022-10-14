@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { answering } from '../features/answer/answerSlice'
+import { answering, isiKunci } from '../features/answer/answerSlice'
 
 import Typography from '@mui/material/Typography';
 import Radio from '@mui/material/Radio';
@@ -14,8 +14,9 @@ function Soal(props) {
   const answer = useSelector(state => state.answer);
   const dispatch = useDispatch();
 
-  const handleChange = (event, idxSoal) => {
+  const handleChange = (event, idxSoal, kunci) => {
     dispatch(answering({idx : idxSoal, jawaban : event.target.value}))
+    dispatch(isiKunci({idx : idxSoal, kunci : kunci}))
   };
 
   return (
@@ -24,9 +25,9 @@ function Soal(props) {
         {soal.isisoal.q}
       </Typography>
       <Typography variant="p">
-        {answer.map((isi,i) => (<div key={i}>{isi}&nbsp; </div>))}
+        {answer.answer.map((isi,i) => (<div key={i}>{isi}&nbsp; </div>))}
       </Typography>
-      <RadioGroup onChange={event => handleChange(event, soal.idx) }>
+      <RadioGroup onChange={event => handleChange(event, soal.idx, soal.isisoal.a) }>
         {
           soal.isisoal.opsi.map((opt, i) => (
             <FormControlLabel key={i} value={opt} control={<Radio />} label={opt} />
