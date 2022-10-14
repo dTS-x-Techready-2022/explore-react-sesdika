@@ -1,4 +1,5 @@
-import './App.css';
+import { useEffect, useState } from 'react';
+import iauction from 'iauction';
 
 // mui
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,16 +11,10 @@ import Typography from '@mui/material/Typography';
 import Header from './components/Header.js';
 import Soal from './components/Soal.js';
 
-const mainFeaturedPost = {
-  title: 'Asah Otak',
-  description:
-    "Asah kemampuan berpikirmu dengan mengikuti quiz.",
-  image: 'https://source.unsplash.com/random',
-  imageText: 'main image description',
-  linkText: 'Ikuti quiz…',
-};
-
 const theme = createTheme();
+
+const curTimestamp = Date.now();
+console.log("curTimestamp",curTimestamp)
 
 function QuizPage() {
   const soal = [{
@@ -38,6 +33,19 @@ function QuizPage() {
     a : 'Mawar'
   }];
 
+  const [countdown, setCountdown] = useState("00:00")
+
+  useEffect(() => {
+    iauction({
+      countdownInMin: 3,
+      startDate: curTimestamp,
+      endDate: curTimestamp + (4 * 60 * 1000),
+      // startDate: "2022/10/14 08:13:30",
+      // endDate: "2022/10/14 17:32:00",
+      callback: (response) => setCountdown(response.time),
+    });
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -55,9 +63,7 @@ function QuizPage() {
           align="center"
           color="text.primary"
           gutterBottom
-        >
-          Quiz Siapakah Aku
-        </Typography>
+        >{countdown}</Typography>
         <Soal soal={soal}/>
       </Container>
     </ThemeProvider>
