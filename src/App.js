@@ -8,6 +8,7 @@ import {
 
 import HomePage from './HomePage.js';
 import QuizPage from './QuizPage.js';
+import ResultPage from './ResultPage.js';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/quiz" element={<QuizPage />} />
+        <Route path="/result" element={<ResultPage />} />
       </Routes>
     </Router>
   );

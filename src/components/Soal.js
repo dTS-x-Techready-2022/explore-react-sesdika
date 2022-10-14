@@ -1,25 +1,40 @@
 import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { answering } from '../features/answer/answerSlice'
 
 import Typography from '@mui/material/Typography';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
+import Divider from '@mui/material/Divider';
 
 function Soal(props) {
   const { soal } = props;
 
+  const answer = useSelector(state => state.answer);
+  const dispatch = useDispatch();
+
+  const handleChange = (event, idxSoal) => {
+    dispatch(answering({idx : idxSoal, jawaban : event.target.value}))
+  };
+
   return (
-    <FormControl sx={{ pt: 8 }}>
+    <>
       <Typography variant="h5" component="p">
-        {soal[0].q}
+        {soal.isisoal.q}
       </Typography>
-      <RadioGroup>
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+      <Typography variant="p">
+        {answer.map((isi,i) => (<div key={i}>{isi}&nbsp; </div>))}
+      </Typography>
+      <RadioGroup onChange={event => handleChange(event, soal.idx) }>
+        {
+          soal.isisoal.opsi.map((opt, i) => (
+            <FormControlLabel key={i} value={opt} control={<Radio />} label={opt} />
+          ))
+        }
       </RadioGroup>
-    </FormControl>
+      <Divider />
+    </>
   );
 }
 

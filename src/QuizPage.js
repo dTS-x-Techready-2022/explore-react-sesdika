@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import iauction from 'iauction';
 
 // mui
@@ -6,6 +7,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import Button from '@mui/material/Button';
 
 // component
 import Header from './components/Header.js';
@@ -17,7 +20,7 @@ const curTimestamp = Date.now();
 console.log("curTimestamp",curTimestamp)
 
 function QuizPage() {
-  const soal = [{
+  const soals = [{
     q : 'Aku adalah hewan. Aku termasuk ke dalam serangga sehingga kakiku ada 6. Aku hidup berkelompok yang dipimpin oleh satu ratu. Aku dan teman-temanku selalu bekerja keras mengumpulkan makanan yang tergeletak agar kami bisa hidup. Siapakah aku?',
     opsi : ['Lebah', 'Semut'],
     a : 'Lebah'
@@ -32,6 +35,11 @@ function QuizPage() {
     opsi : ['Mawar', 'Tulip'],
     a : 'Mawar'
   }];
+  
+  const navigate = useNavigate();
+  const submitQuiz = (event) => {
+    navigate('/result')
+  };
 
   const [countdown, setCountdown] = useState("00:00")
 
@@ -64,7 +72,16 @@ function QuizPage() {
           color="text.primary"
           gutterBottom
         >{countdown}</Typography>
-        <Soal soal={soal}/>
+        <FormControl sx={{ py: 3 }}>
+          {
+            soals.map((soal, i) => (
+              <Soal key={i} soal={{isisoal: soal, idx: i}}/>
+            ))
+          }
+          <Button onClick={submitQuiz} variant="raised" color="primary" style={{float: "right"}}>
+            Submit
+          </Button>
+        </FormControl>
       </Container>
     </ThemeProvider>
   );
